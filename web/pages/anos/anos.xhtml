@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="frmAnos">
+            <p:breadCrumb style="margin-bottom: 20px;">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="Configuración / Años" outcome="/pages/anos/anos"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placement-from="top" escape="true"/>
+            <b:panel title="Listado Años" collapsible="false" look="primary" style="width: 1100px; margin-left: auto; margin-right: auto;">
+                <p:dataTable id="tableAnos2" class="table table-bordered table-striped" value="#{mbVAnos.allAnos}"  var="item" rowIndexVar="rowIndex" style="margin-bottom: 20px; width: 1000px;">
+                    <f:facet name="header">
+                        Años Lectivos
+                    </f:facet>
+                    <p:column headerText="N°" width="80">
+                        <p:outputLabel value="#{rowIndex + 1}"/>
+                    </p:column>
+                    <p:column headerText="Año" width="100">
+                        <p:outputLabel value="#{item.ano}"/>
+                    </p:column>
+                    <p:column headerText="Inicio" width="160">
+                        <p:outputLabel value="#{item.finicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+                    <p:column headerText="Termino" width="160">
+                        <p:outputLabel value="#{item.ftermino}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+                    <p:column headerText="Situación" width="180">
+                        <p:outputLabel value="#{item.situacion ? 'Abierto':'Cerrado'}"/>
+                    </p:column>
+                    <p:column headerText="Regimen" width="180">
+                        <p:outputLabel value="#{item.regimen}"/>
+                    </p:column>
+                    <p:column style="width: 132px; font-size: 12px;">
+                        <b:commandButton id="btnEditar" iconAwesome="fa-edit" action="#{mbVAnos.buscaAnoEdit(item.idAno)}" value="Editar" look="warning"/>
+                    </p:column>
+                </p:dataTable>                
+            </b:panel>            
+        </h:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

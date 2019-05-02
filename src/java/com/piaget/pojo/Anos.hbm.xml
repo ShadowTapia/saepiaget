@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 26, 2018 5:23:29 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Anos" table="anos" catalog="saepiaget" optimistic-lock="version">
+        <id name="idAno" type="java.lang.Short">
+            <column name="id_ano" />
+            <generator class="identity" />
+        </id>
+        <property name="ano" type="int">
+            <column name="ano" length="0" not-null="true" />
+        </property>
+        <property name="finicio" type="date">
+            <column name="finicio" length="10" />
+        </property>
+        <property name="ftermino" type="date">
+            <column name="ftermino" length="10" />
+        </property>
+        <property name="situacion" type="string">
+            <column name="situacion" length="2" />
+        </property>
+        <property name="regimen" type="string">
+            <column name="regimen" length="50" />
+        </property>
+        <set name="matriculas" table="matricula" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_ano" not-null="true" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Matricula" />
+        </set>
+        <set name="apoderadoses" table="apoderados" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_ano" not-null="true" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Apoderados" />
+        </set>
+        <set name="usuarioses" table="usuarios" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_ano" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Usuarios" />
+        </set>
+        <set name="cursoses" table="cursos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_ano" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Cursos" />
+        </set>
+        <set name="alumnoses" table="alumnos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_ano" not-null="true" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Alumnos" />
+        </set>
+    </class>
+</hibernate-mapping>

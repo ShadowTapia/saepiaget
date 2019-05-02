@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <b:form id="frmCursosEdit">
+            <p:breadCrumb style="margin-bottom: 20px;">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="Cursos / Listar" outcome="/pages/cursos/cursos"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placementFrom="top" escape="true"/>
+            <b:panel title="Actualizar Curso" look="primary" collapsible="false" style="width: 1000px; margin-left: auto;margin-right: auto;">
+                <h:panelGrid columns="6">
+                    <b:column style="width: 120px;">
+                        <p:outputLabel value="Nombre*" for="txtNomCurso"/>
+                    </b:column>
+                    <b:column style="width: 280px;">
+                        <p:inputText id="txtNomCurso" value="#{editRecObj.nomcurso}" style="font-size: 12px;">
+                            <f:validateLength minimum="1"/>
+                        </p:inputText>                        
+                    </b:column>
+                    <b:column>
+                        <p:message for="txtNomCurso"/>
+                    </b:column>
+                    <b:column>
+                        <p:outputLabel value="Letra*" for="txtLetra"/>
+                    </b:column>
+                    <b:column>
+                        <p:inputText id="txtLetra" value="#{editRecObj.letra}" style="width: 30px; font-size: 12px;" converter="uCaseConverter">
+                            <f:validateLength maximum="1"/>
+                            <f:ajax event="blur" render="@this"/>
+                        </p:inputText>
+                    </b:column>
+                    <b:column>
+                        <p:message for="txtLetra"/>
+                    </b:column>                    
+                </h:panelGrid>
+                <h:panelGrid columns="4" style="margin-top: 20px">
+                    <b:column style="width: 120px;">
+                        <p:outputLabel value="Profesor*" for="cboProfe"/>
+                    </b:column>
+                    <b:column>
+                        <p:selectOneMenu id="cboProfe" value="#{mbVCursos.codProfe}" style="font-size: 12px;">
+                            <f:selectItem itemLabel="Seleccione un Profesor"/>
+                            <f:selectItems value="#{mbVProfes.lstOnlyprofes}"/>
+                        </p:selectOneMenu>
+                    </b:column>
+                    <b:column>
+                        <p:outputLabel value="Sede*" for="cboSede"/>
+                    </b:column>
+                    <b:column>
+                        <p:selectOneMenu id="cboSede" value="#{mbVCursos.codSede}" style="font-size: 12px;">
+                            <f:selectItem itemLabel="Seleccione una Sede"/>
+                            <f:selectItems value="#{mbVSedes.lstSedes}"/>
+                        </p:selectOneMenu>
+                    </b:column>
+                </h:panelGrid>
+                <b:commandButton id="btnGuardar" look="success" class="btn btn-success" style="margin-top: 20px; margin-left: 400px; margin-right: 400px;" value="Guardar" action="#{mbVCursos.updaCursos(editRecObj)}" size="sm"/>
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

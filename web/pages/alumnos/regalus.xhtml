@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <b:form id="frmRegAlumnos">
+            <b:growl id="msgGeneral" showDetail="true" placementFrom="top" escape="true"/>
+            <b:panel title="Registro de Alumnos" collapsible="false" look="primary">
+                
+                <h:panelGrid columns="5">
+                    <b:column col-sm="6">
+                        <b:inputText id="txtRun" label="RUN" required="true" style="width: 130px;" mask="99.999.999-*" 
+                                     converter="uCaseConverter" value="#{mbVAlumnos.txtRuna}" class="form-control" requiredMessage="El Run es un valor requerido.-">
+                            <f:ajax event="blur" render="@this"/>
+                        </b:inputText>
+                        <b:message for="txtRun"/>
+                        <b:focus target="txtRun"/>
+                    </b:column>
+                    <b:column col-xs="8">
+                        <b:inputText id="txtNummatricula" label="N° Matri"  mask="numeric" maxlength="3" required="true" style="width: 120px;" class="form-control" value="#{mbVAlumnos.nmat}" requiredMessage="Este campo es obligatorio.-"/>
+                        <b:message for="txtNummatricula"/>
+                    </b:column>
+                    <b:column col-sm="10">
+                        <b:inputText id="txtNombre" label="Nombre" required="true" style="width: 300px;" converter="uCaseConverter" class="form-control input-sm" value="#{mbVAlumnos.alumnos.nomalumno}">
+                            <f:ajax event="blur" render="@this"/>
+                        </b:inputText>
+                        <b:message for="txtNombre"/>
+                    </b:column>
+                    <b:column col-sm="10">
+                        <b:inputText id="txtPaterno" label="A. Paterno" required="true" style="width: 300px;" converter="uCaseConverter" class="form-control input-sm" value="#{mbVAlumnos.alumnos.paternoalu}">
+                            <f:ajax event="blur" render="@this"/>
+                        </b:inputText>
+                        <b:message for="txtPaterno"/>          
+                    </b:column>
+                    <b:column col-sm="10">
+                        <b:inputText id="txtMaterno" label="A. Materno" required="true" style="width: 300px;" converter="uCaseConverter" class="form-control input-sm" value="#{mbVAlumnos.alumnos.maternoalu}">
+                            <f:ajax event="blur" render="@this"/>
+                        </b:inputText>
+                        <b:message for="txtMaterno"/>
+                    </b:column>
+                </h:panelGrid>
+                <h:panelGrid columns="4">
+                    <b:column col-sm="8">
+                        <b:dateTimePicker id="txtFnacimiento" format="DD/MM/YYYY" showTime="false" label="F. Nacimiento" style="width: 170px;" class="form-control input-sm" showButtonPanel="true" value="#{mbVAlumnos.alumnos.fnacimiento}"/> 
+                        <b:message for="txtFnacimiento"/>
+                    </b:column>
+                    <b:column col-sm="4">
+                        <b:inputText id="txtFono" label="Fono" mask="numeric" maxlength="10" style="width: 120px;" class="form-control input-sm" value="#{mbVAlumnos.alumnos.fono}"/>
+                        <b:message for="txtFono"/>
+                    </b:column>
+                    <b:column col-sm="10">
+                        <b:selectOneMenu id="cboSexo" label="Sexo" class="form-control dropdown" required="true" style="width: 180px;" labelColSm="8" requiredMessage="Este campo es obligatorio.-" value="#{mbVAlumnos.alumnos.sexo}">
+                            <f:selectItem itemLabel="Seleccione..."/>
+                            <f:selectItem itemLabel="Masculino" itemValue="1"/>
+                            <f:selectItem itemLabel="Femenino" itemValue="2"/>
+                        </b:selectOneMenu>
+                        <b:message for="@previous" col-sm="8"/>
+                    </b:column>
+                    <b:column col-lg="8">
+                        <b:inputText id="txtDireccion" label="Dirección" class="form-control input-lg" style="width: 700px;" value="#{mbVAlumnos.alumnos.direccion}" labelColLg="8"/>
+                    </b:column>
+                </h:panelGrid>
+                <h:panelGrid columns="4">
+                    <b:column col-sm="10">
+                        <p:selectOneMenu id="cboRegion" label="Región" class="form-control dropdown" value="#{mbVRegiones.idRegion}">
+                            <f:selectItems value="#{mbVRegiones.listRegiones}"/>
+                            <p:ajax event="valueChange" immediate="true" process="@this" update="cboProvincia"/>
+                        </p:selectOneMenu>                       
+                    </b:column>
+                    <b:column colLg="14">
+                        <p:selectOneMenu id="cboProvincia" label="Provincia" class="form-control dropdown" style="width: 210px;" value="#{mbVRegiones.codProvincia}">
+                            <f:selectItem itemLabel="Seleccione una Provincia" noSelectionOption="true"/>
+                            <f:selectItems value="#{mbVRegiones.listProvincias}"/>
+                            <p:ajax event="valueChange" immediate="true" process="@this" update="cboComuna"/>
+                        </p:selectOneMenu>                        
+                    </b:column>
+                    <b:column colLg="14">
+                        <p:selectOneMenu id="cboComuna" label="Comuna" class="form-control dropdown" style="margin-left: 20px;width: 210px;" value="#{mbVAlumnos.codComuna}">
+                            <f:selectItem itemLabel="Seleccione una Comuna" noSelectionOption="true"/>
+                            <f:selectItems value="#{mbVRegiones.listComunas}"/>
+                        </p:selectOneMenu>
+                    </b:column>
+                </h:panelGrid>
+                <b:commandButton id="btnGuardar" look="sucsess" class="btn btn-success" style="margin-top: 20px; margin-left: 500px;margin-right: 500px;" action="#{mbVAlumnos.regisAlumno()}" value="Guardar" size="sm"/>
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

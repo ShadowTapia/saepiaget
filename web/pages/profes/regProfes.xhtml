@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <b:form id="frmRegProfes">
+            <p:breadCrumb style="margin-bottom: 20px;">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="Usuarios / Ingresar" outcome="/pages/profes/regProfes"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placementFrom="top" escape="true"/>
+            <b:panel title="Registro de Usuarios" collapsible="false" look="primary">
+                <h:panelGrid columns="4">
+                    <b:column col-sm="6">
+                        <b:inputText id="txtRun" label="RUN" required="true" style="width: 130px;" mask="99.999.999-*" converter="uCaseConverter" value="#{mbVProfes.txtRun}" class="form-control" requiredMessage="El Run es un valor requerido.-">
+                            <f:ajax event="blur" render="@this"/>
+                        </b:inputText>
+                        <b:message for="txtRun"/>
+                        <b:focus target="txtRun"/>
+                    </b:column>
+                    <b:column col-sm="10">
+                        <b:inputText id="txtNombre" label="Nombre" required="true" style="width: 300px;" converter="uCaseConverter" value="#{mbVProfes.profesores.nomProfe}" class="form-control input-sm" requiredMessage="El nombre es un valor requerido.-">
+                            <f:ajax event="blur" render="@this"/>
+                        </b:inputText>
+                        <b:message for="txtNombre"/>
+                    </b:column>
+                    <b:column col-sm="10">
+                        <b:inputText id="txtPaterno" label="A. Paterno" required="true" style="width: 300px;" converter="uCaseConverter" value="#{mbVProfes.profesores.paterProfe}" class="form-control input-sm" requiredMessage="El A. Paterno es un valor requerido.-">
+                            <f:ajax event="blur" render="@this"/>
+                        </b:inputText>
+                        <b:message for="txtPaterno"/>
+                    </b:column>
+                    <b:column col-sm="10">
+                        <b:inputText id="txtMaterno" label="A. Materno" required="true" style="width: 300px;" converter="uCaseConverter" value="#{mbVProfes.profesores.materProfe}" class="form-control input-sm" requiredMessage="El A. Materno es un valor requerido.-">
+                            <f:ajax event="blur" render="@this"/>
+                        </b:inputText>
+                        <b:message for="txtMaterno"/>
+                    </b:column>
+                    <b:column col-sm="6">
+                        <b:inputText id="txtFono" label="Telefono" mask="integer" value="#{mbVProfes.profesores.fonoProfe}" class="form-control input-sm" style="width:  150px;"/>
+                        <b:message for="txtFono"/>
+                    </b:column>
+                    <b:column>
+                        <b:inputText id="txtDireccion" label="Domicilio" value="#{mbVProfes.profesores.addressProfe}" class="form-control input-lg"/>
+                        <b:message for="txtDireccion"/>
+                    </b:column>
+                    <b:column>
+                        <b:inputText id="txtMail" label="E-Mail" mask="email" required="true" value="#{mbVProfes.txtMail}" class="form-control input-sm" style="width: 300px;" requiredMessage="El email es un valor requerido.-"/>
+                        <b:message for="txtMail"/>
+                    </b:column>
+                    <b:column>
+                        <b:selectOneMenu id="cboProfile" label="Tipo de Usuario" class="form-control dropdown" value="#{mbVProfes.mbVProfiles.codPrf}" colMd="12" required="true" requiredMessage="Debe seleccionar un tipo de Usuario.-">
+                            <f:selectItem itemLabel="Seleccione un tipo de usuario"/>
+                            <f:selectItems value="#{mbVProfes.mbVProfiles.listPerfiles}"/>
+                        </b:selectOneMenu>
+                    </b:column>
+                </h:panelGrid>
+                <b:commandButton id="btnGuardar" look="success" class="btn btn-success" value="Guardar" size="sm" iconAwesome="fa-user-plus" action="#{mbVProfes.registrarProfe()}"/>
+
+            </b:panel>
+        </b:form> 
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

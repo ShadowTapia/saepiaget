@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <b:form id="frmEnse">
+            <p:breadCrumb style="margin-bottom: 20px">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="Configuración / Tipos de Enseñanza" outcome="/pages/ense/ense"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placementFrom="top" escape="true"/>
+            <b:panel title="Tipos de Enseñanza" collapsible="false" look="primary">
+                <b:row>
+                    <b:column>
+                        <p:commandButton id="btnNewEnse" value="Nuevo tipo de Enseñanza" class="btn btn-success" oncomplete="PF('dlgEnse').show();" icon="ui-icon-plusthick"/>
+                    </b:column>
+                </b:row>
+                <p:dataTable id="tableEnse" var="item" value="#{mbVEnse.allEnse}" rowIndexVar="rowIndex" emptyMessage="No se encontraron tipos de Enseñanza" class="table table-striped table-bordered table-hover" style="margin-top: 20px; margin-bottom: 20px;">
+                    <f:facet name="header">
+                        Listado de Enseñanzas
+                    </f:facet>
+                    <p:column headerText="N°" width="80">
+                        <p:outputLabel value="#{rowIndex + 1}"/>
+                    </p:column>
+                    <p:column headerText="Codigo" width="100">
+                        <p:outputLabel value="#{item.idnum}"/>
+                    </p:column>
+                    <p:column headerText="Nombre tipo de Enseñanza">
+                        <p:outputLabel value="#{item.namense}"/>
+                    </p:column>
+                    <p:column headerText="Fecha de Resolución" width="200">
+                        <p:outputLabel value="#{item.dateresol}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+                    <p:column headerText="Plan" width="220">
+                        <p:outputLabel value="#{item.planes.descripcion}"/>
+                    </p:column>
+                </p:dataTable>
+                <p:dialog header="Ingreso de Enseñanzas" width="700" widgetVar="dlgEnse" modal="true" showEffect="explode" hideEffect="explode" resizable="false">
+                    <b:row>
+                        <b:column col-md="10">
+                            <b:well>
+                                <b:row>
+                                    <b:column col-xs="5">
+                                        <b:inputText id="txtNumEnse" label="N° de Enseñanza" mask="integer" class="form-control" value="#{mbVEnse.codEnse}"/>
+                                        <b:message for="txtNumEnse"/>
+                                    </b:column>
+                                    <b:column col-xs="12">
+                                        <b:inputText id="txtNomEnse" label="Nombre Enseñanza" class="form-control" value="#{mbVEnse.nameEnse}"/>
+                                        <b:message for="txtNomEnse"/>
+                                    </b:column>
+                                    <b:column col-xs="8">
+                                        <b:selectOneMenu id="cboDecreto" label="Seleccione un plan de estudio" class="form-control" value="#{mbVEnse.idPlan}">
+                                            <f:selectItem itemLabel="Seleccione un plan de estudio"/>
+                                            <f:selectItems value="#{mbVPlanes.listPlanes}"/>
+                                        </b:selectOneMenu>
+                                    </b:column>
+                                    <b:column col-xs="6">
+                                        <b:dateTimePicker id="txtFecha" format="DD/MM/YYYY" show-time="false" showButtonPanel="true" label="Fecha" class="form-control" value="#{mbVEnse.fechaResol}"/>
+                                        <b:message for="txtFecha"/>
+                                    </b:column>
+                                    <b:column>
+                                        <p:commandButton id="btnGuardar" class="btn btn-success" value="Guardar" actionListener="#{mbVEnse.guardarEnse()}" icon="ui-icon-disk" update=":frmEnse:tableEnse" oncomplete="PF('dlgEnse').hide();"/>
+                                    </b:column>
+                                </b:row>
+                            </b:well>
+                        </b:column>
+                    </b:row>
+                </p:dialog>
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

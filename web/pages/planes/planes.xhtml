@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <b:form id="frmPlanes">
+            <p:breadCrumb style="margin-bottom: 20px">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="Configuración / Planes" outcome="/pages/planes/planes"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placement-from="top" escape="true"/>
+            <b:panel title="Planes de Estudio" collapsible="false" look="primary">
+                <b:row>
+                    <b:column>
+                        <p:commandButton id="btnNewPlan" value="Nuevo Plan" class="btn btn-success" oncomplete="PF('dlgPlanes').show();" icon="ui-icon-plusthick"/>
+                    </b:column>
+                </b:row>
+                <p:dataTable id="tablePlanes" var="item" value="#{mbVPlanes.allPlanes}" rowIndexVar="row" style="margin-top: 20px; margin-bottom: 20px;" class="table table-bordered table-hover table-striped">
+                    <f:facet name="header">
+                        Listado de Planes
+                    </f:facet>
+                    <p:column headerText="N°" width="80">
+                        <p:outputLabel value="#{row+1}"/>
+                    </p:column>
+                    <p:column headerText="Cod. Decreto">
+                        <p:outputLabel value="#{item.coddecreto}"/>
+                    </p:column>
+                    <p:column headerText="Descripción">
+                        <p:outputLabel value="#{item.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Resolución">
+                        <p:outputLabel value="#{item.resolucion}"/>
+                    </p:column>
+                </p:dataTable>
+            </b:panel>
+            <p:dialog header="Ingreso de Planes" width="600" widgetVar="dlgPlanes" modal="true" showEffect="explode" hideEffect="explode" resizable="false">
+                <b:row>
+                    <b:column col-md="10">
+                        <b:well>
+                            <b:row>
+                                <b:column col-xs="5">
+                                    <b:inputText id="txtCodPlan" label="Cod. Plan" mask="integer" class="form-control" value="#{mbVPlanes.codtextDecreto}"/>
+                                    <b:message for="txtCodPlan"/>
+                                </b:column>
+                                <b:column col-xs="6">
+                                    <b:dateTimePicker id="txtFecha" format="DD/MM/YYYY" show-time="false" showButtonPanel="true" label="Fecha" class="form-control" value="#{mbVPlanes.fechaPlan}"/>
+                                    <b:message for="txtFecha"/>
+                                </b:column>
+                                <b:column col-xs="12">
+                                    <b:inputText id="txtNombre" label="Nombre Decreto Ej.(10 de 2000)" class="form-control" value="#{mbVPlanes.nomTextDecreto}"/>
+                                    <b:message for="txtNombre"/>
+                                </b:column>
+                                <b:column col-xs="12">
+                                    <b:inputText id="txtDescripcion" label="Descripción Ej.(1 a 2 Medio)*" class="form-control" value="#{mbVPlanes.desctextDecreto}"/>
+                                    <b:message for="txtDescripcion"/>
+                                </b:column>
+                                <b:column>
+                                    <p:commandButton id="btnGuardar" class="btn btn-success" value="Guardar" icon="ui-icon-disk" 
+                                                     actionListener="#{mbVPlanes.grabarPlanes()}" update=":frmPlanes:tablePlanes" oncomplete="PF('dlgPlanes').hide();"/>
+                                </b:column>
+                            </b:row>
+                        </b:well>
+                    </b:column>
+                </b:row>
+            </p:dialog>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

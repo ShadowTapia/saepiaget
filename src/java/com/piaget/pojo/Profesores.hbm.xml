@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 26, 2018 5:23:29 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Profesores" table="profesores" catalog="saepiaget" optimistic-lock="version">
+        <id name="idProfe" type="string">
+            <column name="id_profe" length="15" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="profiles" class="com.piaget.pojo.Profiles" fetch="select">
+            <column name="id_profile" not-null="true" />
+        </many-to-one>
+        <property name="runProfe" type="string">
+            <column name="run_profe" length="12" not-null="true" />
+        </property>
+        <property name="nomProfe" type="string">
+            <column name="nom_profe" length="100" not-null="true" />
+        </property>
+        <property name="paterProfe" type="string">
+            <column name="pater_profe" length="70" not-null="true" />
+        </property>
+        <property name="materProfe" type="string">
+            <column name="mater_profe" length="70" not-null="true" />
+        </property>
+        <property name="fonoProfe" type="java.lang.Integer">
+            <column name="fono_profe" />
+        </property>
+        <property name="addressProfe" type="string">
+            <column name="address_profe" length="150" />
+        </property>
+        <property name="emailProfe" type="string">
+            <column name="email_profe" length="150" not-null="true" />
+        </property>
+        <set name="cursoses" table="cursos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_profe" length="15" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Cursos" />
+        </set>
+        <set name="usuarioses" table="usuarios" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_profe" length="15" not-null="true" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Usuarios" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <b:form id="frmEditOrden">
+            <p:breadCrumb style="margin-bottom: 20px;">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="Libro / listar" outcome="/pages/libro/listar"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placementFrom="top" escape="true"/>
+            <b:panel title="Listado de Alumnos" collapsible="false" look="primary" class="panel-primary panel " style=" width: 1100px;margin-left: auto; margin-right: auto;">
+                <h:panelGrid columns="2" style="margin-left: auto; margin-right: auto;">
+                    <b:inputText id="txtAno" class="form-control-static input-sm"  style="width: 80px; text-align: center;" disabled="true" label="Año Escolar" value="#{editAnos.ano}"/>
+                    <b:inputText id="txtCurso" class="form-control-static input-sm" labelStyle="margin-left: 20px;" style="width: 120px; margin-left: 20px; text-align: center;" disabled="true" label="Curso" value="#{editCursos.nomcurso}"/>                    
+                </h:panelGrid>
+                <h:panelGrid columns="1" style="margin-left: auto; margin-right: auto;">
+                    <b:inputText id="txtProfesor" class="form-control-static input-sm" style="width: 300px;text-align: center;" disabled="true" label="Profesor" value="#{editCursos.profesores.nomProfe}  #{editCursos.profesores.paterProfe} #{editCursos.profesores.materProfe}"/>
+                </h:panelGrid>
+                <h:panelGrid id="panelEditlisalumnos" columns="1" style="margin-left: auto; margin-right: auto;">
+                    <b:dataTable id="tableEditcurso" value="#{editAlumnos}" var="alus" searching="false" paginated="false" pageLength="50" class="table table-hover table-striped">
+                        <b:dataTableColumn dataType="numeric">
+                            <f:facet name="header">
+                                <h:outputText value="N° lista" style="font-size: 12px;"/>
+                            </f:facet>
+                            <b:inputText value="#{alus.matricula.idlista}" mask="numeric" maxlength="2" style="width: 50px; font-size: 12px; text-align: center;"/>
+
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="RUN" style="font-size: 12px;">
+                            #{alus.runalumno}-#{alus.digitoal}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="Nombre" style="font-size: 12px;">
+                            #{alus.nomalumno}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="A. Paterno" style="font-size: 12px;">
+                            #{alus.paternoalu}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="A. Materno" style="font-size: 12px;">
+                            #{alus.maternoalu}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="Dirección" style="font-size: 12px;">
+                            #{alus.direccion}
+                        </b:dataTableColumn>
+                        <b:dataTableColumn label="Fono" style="font-size: 12px;">
+                            #{alus.fono}
+                        </b:dataTableColumn>
+                    </b:dataTable> 
+                    <h:panelGrid columns="1" style="margin-left: auto; margin-right: auto;">
+                        <b:commandButton id="btnGuardar" look="success" class="btn btn-success" style="margin-top: 10px;" action="#{mbVAlumnos.regisOrden(editAlumnos,editAnos)}" update=":frmEditOrden:tableEditcurso" value="Actualizar" size="sm"/>
+                    </h:panelGrid>
+
+                </h:panelGrid>
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <b:form id="frmEditUser">
+            <p:breadCrumb style="margin-bottom: 20px;">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="#{session.getAttribute('nameUser')} / Actualizar / Datos" outcome="/pages/profes/updateUserByMail"/>
+                <p:menuitem value="Editar #{session.getAttribute('nameUser')}" outcome="/pages/profes/userEdit"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placementFrom="top" escape="true"/>
+            <b:panel title="Actualización datos #{session.getAttribute('nameUser')}" look="primary" style="width: 800px; margin-left: auto; margin-right: auto;">
+                <b:row>
+                    <b:column col-sm="6">
+                        <b:inputText id="txtRun" label="RUN" style="width: 130px;" class="form-control input-sm" value="#{editRecordObj.runProfe}" disabled="true"/>
+                    </b:column>
+                    <b:column col-sm="10">
+                        <b:inputText id="txtNombre" label="Nombre" required="true" style="width: 300px;" converter="uCaseConverter" class="form-control input-sm" value="#{editRecordObj.nomProfe}" requiredMessage="El nombre es un campo obligatorio.-">
+                            <f:ajax event="blur" render="@this"/>                            
+                        </b:inputText>
+                        <b:message for="txtNombre"/>
+                        <b:focus target="txtNombre"/>
+                    </b:column>
+                    <b:column col-sm="10">
+                        <b:inputText id="txtPaterno" label="A. Paterno" required="true" style="width: 300px;" converter="uCaseConverter" class="form-control input-sm" value="#{editRecordObj.paterProfe}" requiredMessage="El Apellido paterno es un campo obligatorio.-">
+                            <f:ajax event="blur" render="@this"/>
+                        </b:inputText>
+                        <b:message for="txtPaterno"/>
+                    </b:column>
+                    <b:column col-sm="10">
+                        <b:inputText id="txtMaterno" label="A. Materno" required="true" style="width: 300px;" converter="uCaseConverter" class="form-control input-sm" value="#{editRecordObj.materProfe}" requiredMessage="El Apellido materno es un campo obligatorio.-">
+                            <f:ajax event="blur" render="@this"/>
+                        </b:inputText>
+                        <b:message for="txtMaterno"/>
+                    </b:column>
+                    <b:column col-sm="6">
+                        <b:inputText id="txtFono" label="Teléfono" mask="integer" class="form-control input-sm" style="width: 150px;" value="#{editRecordObj.fonoProfe}"/>
+                        <b:message for="txtFono"/>
+                    </b:column>
+                    <b:column>
+                        <b:inputText id="txtDireccion" label="Domicilio" class="form-control" style="width: 600px;" value="#{editRecordObj.addressProfe}"/>
+                        <b:message for="txtDireccion"/>
+                    </b:column>
+                    <b:column>
+                        <b:inputText id="txtMail" label="E-mail" mask="email" class="form-control" value="#{editRecordObj.emailProfe}" style="width: 300px;"/>
+                        <b:message for="txtMail"/>
+                    </b:column>
+                    <b:column>
+                        <b:commandButton id="btnUpdate" look="success" value="Modificar" action="#{mbVProfes.updateUserLogueado(editRecordObj)}" class="form-control btn btn-success"/>
+                    </b:column>
+                </b:row>
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

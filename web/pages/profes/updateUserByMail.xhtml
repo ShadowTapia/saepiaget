@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <b:form id="frmUserByMail">
+            <p:breadCrumb style="margin-bottom: 20px;">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="#{session.getAttribute('nameUser')} / Actualizar / Datos " outcome="/pages/profes/updateUserByMail"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" placementFrom="top" showDetail="true" escape="true"/>
+            <b:panel title="Modificación de Datos" collapsible="false" look="primary">
+                <b:dataTable id="tableUser"  class="table table-bordered table-striped" value="#{mbVProfes.byMail}" var="user" searching="false" paginated="false">
+                    <b:dataTableColumn label="Run">
+                        #{user.runProfe}
+                    </b:dataTableColumn>
+                    <b:dataTableColumn label="Nombre">
+                        #{user.nomProfe}
+                    </b:dataTableColumn>
+                    <b:dataTableColumn label="A. Paterno">
+                        #{user.paterProfe}
+                    </b:dataTableColumn>
+                    <b:dataTableColumn label="A. Materno">
+                        #{user.materProfe}
+                    </b:dataTableColumn>
+                    <b:dataTableColumn label="Telefono">
+                        #{user.fonoProfe}
+                    </b:dataTableColumn>
+                    <b:dataTableColumn label="Domicilio">
+                        #{user.addressProfe}
+                    </b:dataTableColumn>
+                    <b:dataTableColumn label="Opción">
+                        <b:commandButton value="Editar" icon="edit" action="#{mbVProfes.BuscaUserEdit(user.idProfe)}" look="warning"/>
+                    </b:dataTableColumn>
+                </b:dataTable>
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

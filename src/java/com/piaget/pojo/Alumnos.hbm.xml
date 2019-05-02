@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 18, 2018 2:42:48 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Alumnos" table="alumnos" catalog="saepiaget" optimistic-lock="version">
+        <id name="idalumno" type="string">
+            <column name="idalumno" length="15" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="anos" class="com.piaget.pojo.Anos" fetch="select">
+            <column name="id_ano" not-null="true" />
+        </many-to-one>
+        <many-to-one name="apoderados" class="com.piaget.pojo.Apoderados" fetch="select" not-found="ignore">
+            <column name="rutapoderado" length="15" />
+        </many-to-one>
+        <many-to-one name="comunas" class="com.piaget.pojo.Comunas" fetch="select" not-found="ignore">
+            <column name="codcomuna" />
+        </many-to-one>
+        <property name="nummatricula" type="java.lang.Short">
+            <column name="nummatricula" />
+        </property>
+        <property name="runalumno" type="java.lang.Integer">
+            <column name="runalumno" />
+        </property>
+        <property name="digitoal" type="java.lang.Character">
+            <column name="digitoal" length="1" />
+        </property>
+        <property name="nomalumno" type="string">
+            <column name="nomalumno" length="30" />
+        </property>
+        <property name="paternoalu" type="string">
+            <column name="paternoalu" length="20" />
+        </property>
+        <property name="maternoalu" type="string">
+            <column name="maternoalu" length="20" />
+        </property>
+        <property name="fnacimiento" type="date">
+            <column name="fnacimiento" length="10" />
+        </property>
+        <property name="fono" type="java.lang.Integer">
+            <column name="fono" />
+        </property>
+        <property name="sexo" type="string">
+            <column name="sexo" length="2" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="60" />
+        </property>
+        <property name="nivelEduPadre" type="string">
+            <column name="nivel_edu_padre" length="15" />
+        </property>
+        <property name="nivelEduMadre" type="string">
+            <column name="nivel_edu_madre" length="15" />
+        </property>
+        <one-to-one name="matricula" class="com.piaget.pojo.Matricula">            
+        </one-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <b:form id="frmUpPassUser">
+            <p:breadCrumb style="margin-bottom: 20px">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="#{session.getAttribute('nameUser')} / Actualizar / Contraseña" outcome="/pages/profes/upUserPass"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placement-from="top" escape="true"/>
+            <b:panel id="panelPass" title="Cambio de Contraseña" collapsible="false" look="primary" style="width: 500px;margin-left: auto;margin-right: auto;">
+                <b:row>
+                    <b:column>
+                        <b:inputSecret id="txtPassActual" label="Contraseña actual" tooltip="Debe contener un minímo de 5 caracteres y un máximo de 10.-" tooltipPosition="right" class="form-control" required="true" requiredMessage="La contraseña actua es requerida.-" style="width: 400px" value="#{mbVUser.actualPass}">
+                            <f:validateLength minimum="5" maximum="10"/>
+                        </b:inputSecret>
+                        <b:message for="txtPassActual"/>
+                    </b:column>
+                    <b:column>
+                        <b:inputSecret id="txtNewPass" label="Nueva Contraseña" tooltip="Debe contener un minímo de 5 caracteres y un máximo de 10.-" tooltipPosition="right" class="form-control" required="true" requiredMessage="La nueva contraseña es requerida.-" style="width: 400px" value="#{mbVUser.newPass}">
+                            <f:validateLength minimum="5" maximum="10"/>
+                        </b:inputSecret>
+                        <b:message for="txtNewPass"/>
+                    </b:column>
+                    <b:column>
+                        <b:inputSecret id="txtConfirmPass" label="Confirmar Contraseña" class="form-control" required="true" requiredMessage="Se requiere la confirmación de la contraseña.-" style="width: 400px" value="#{mbVUser.confirmPass}">
+                            <f:validateLength minimum="5" maximum="10"/>
+                        </b:inputSecret>
+                        <b:message for="txtConfirmPass"/>
+                    </b:column>
+                    <b:column>
+                        <b:commandButton id="btnGuardar" look="success" value="Guardar" size="sm" action="#{mbVUser.updatePass()}"/>
+                    </b:column>
+                </b:row>
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

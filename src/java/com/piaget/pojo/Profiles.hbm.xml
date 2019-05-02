@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 26, 2018 5:23:29 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Profiles" table="profiles" catalog="saepiaget" optimistic-lock="version">
+        <id name="idProfile" type="java.lang.Short">
+            <column name="id_profile" />
+            <generator class="identity" />
+        </id>
+        <property name="tipo" type="string">
+            <column name="tipo" length="50" not-null="true" />
+        </property>
+        <set name="profesoreses" table="profesores" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_profile" not-null="true" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Profesores" />
+        </set>
+    </class>
+</hibernate-mapping>

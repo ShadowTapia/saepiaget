@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="Site.css"/>
+        <h:outputScript library="js" name="jquery.scrollTop.js"/>
+        <title>Sistema Administración Pedagógica</title>
+    </h:head>  
+    
+    
+    <script>$(function(){scrollTop({color:"grey",top:400,time:500,position:"middle",speed:300});});</script>
+
+    <h:body>
+        <div id="top">
+            <ui:insert name="top">
+                <b:form>
+                    <b:navBar brand="SAP" brand-href="" inverse="true">
+                        <b:navbarLinks>
+                            <b:dropMenu value="Alumnos" iconAwesome="fa-child">
+                                <b:navLink value="Ingresar" outcome="/pages/alumnos/regalus"></b:navLink>
+                            </b:dropMenu>
+                            <b:dropMenu value="Usuarios" iconAwesome="fa-user">
+                                <b:navLink value="Ingresar" outcome="/pages/profes/regProfes"></b:navLink>
+                                <b:navLink value="Listar" outcome="/pages/profes/conProfes"></b:navLink>
+                                <b:navLink></b:navLink>
+                                <b:dropMenu value="Actualizar" iconAwesome="fa-edit">
+                                    <b:navLink value="Usuario" href="#"></b:navLink>
+                                    <b:navLink value="Contraseña" outcome="/pages/profes/upPassword"></b:navLink>
+                                </b:dropMenu>                            
+                            </b:dropMenu>
+                            <b:dropMenu value="Cursos">
+                                <b:navLink value="Ingresar" outcome="/pages/cursos/ingCursos"></b:navLink>
+                                <b:navLink value="Listar" outcome="/pages/cursos/cursos"></b:navLink>
+                                <b:navLink></b:navLink>
+                                <b:dropMenu value="Actualizar" iconAwesome="fa-edit">
+                                    <b:navLink value="Orden" outcome="/pages/cursos/ordenCursos"></b:navLink>
+                                    <b:navLink value="Configuración" href="#"></b:navLink>
+                                </b:dropMenu>
+                            </b:dropMenu>
+                            <b:dropMenu value="Libro">
+                                <b:navLink value="Listar" outcome="/pages/libro/listar"></b:navLink>
+                            </b:dropMenu>
+                            <b:dropMenu value="Informes">
+                                <b:dropMenu value="Antecedentes">
+                                    <b:navLink value="Alumno regular" href="#"></b:navLink>
+                                </b:dropMenu>
+                                <b:dropMenu value="Listas">
+                                    <b:navLink value="de Curso" href="#"></b:navLink>
+                                    <b:navLink value="Adaptable" href="#"></b:navLink>
+                                </b:dropMenu>
+                            </b:dropMenu>
+                            <b:dropMenu value="Configuración">
+                                <b:navLink value="Años" outcome="/pages/anos/anos"></b:navLink>
+                                <b:navLink value="Planes" outcome="/pages/planes/planes"></b:navLink>                                
+                                <b:navLink value="Perfiles" outcome="/pages/perfiles/perfiles"></b:navLink>
+                                <b:navLink value="Regiones" outcome="/pages/regiones/region"></b:navLink>
+                                <b:navLink value="Tipos de Enseñanza" outcome="/pages/ense/ense"></b:navLink>
+                                <b:navLink value="Sedes" outcome="/pages/sedes/sedes"></b:navLink>
+                            </b:dropMenu>
+                            <b:navLink value="Acerca" outcome="/pages/About"></b:navLink>
+                            <b:navLink value="Contacto" outcome="/pages/Contacto"></b:navLink>                        
+                        </b:navbarLinks>
+                        <b:navbarLinks class="navbar-right">
+                            <b:dropMenu value="#{session.getAttribute('nameUser')}">
+                                <b:dropMenu value="Actualizar" iconAwesome="fa-edit">
+                                    <b:navLink value="Datos" outcome="/pages/profes/updateUserByMail"></b:navLink>
+                                    <b:navLink value="Contraseña" outcome="/pages/profes/upUserPass" iconAwesome="fa-key"></b:navLink>
+                                </b:dropMenu>
+                            </b:dropMenu>
+                            <b:navCommandLink value="Salir" action="#{sesBean.closeSession()}"/>                            
+                        </b:navbarLinks>
+                    </b:navBar> 
+                </b:form>
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content"></ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom">
+                <hr/>
+                <div align="center">&copy; - Sistema Administración Pedagógica</div>
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

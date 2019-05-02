@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 10, 2018 9:29:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Comunas" table="comunas" catalog="saepiaget" optimistic-lock="version">
+        <id name="codcomuna" type="java.lang.Short">
+            <column name="codcomuna" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="provincias" class="com.piaget.pojo.Provincias" fetch="select">
+            <column name="idprovincia" />
+        </many-to-one>
+        <property name="comuna" type="string">
+            <column name="comuna" length="25" not-null="true" />
+        </property>
+        <set name="alumnoses" table="alumnos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="codcomuna" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Alumnos" />
+        </set>
+        <set name="sedeses" table="sedes" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="codcomuna" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Sedes" />
+        </set>
+        <set name="colegios" table="colegio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="codcomuna" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Colegio" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 6, 2018 11:22:07 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Cursos" table="cursos" catalog="saepiaget" optimistic-lock="version">
+        <id name="idcurso" type="java.lang.Short">
+            <column name="idcurso" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="anos" class="com.piaget.pojo.Anos" fetch="select">
+            <column name="id_ano" />
+        </many-to-one>
+        <many-to-one name="profesores" class="com.piaget.pojo.Profesores" fetch="select">
+            <column name="id_profe" length="15" />
+        </many-to-one>
+        <many-to-one name="sedes" class="com.piaget.pojo.Sedes" fetch="select">
+            <column name="idsede" />
+        </many-to-one>
+        <many-to-one name="tensenanza" class="com.piaget.pojo.Tensenanza" fetch="select">
+            <column name="idense" length="15" />
+        </many-to-one>
+        <property name="nomcurso" type="string">
+            <column name="nomcurso" length="15" />
+        </property>
+        <property name="letra" type="java.lang.Character">
+            <column name="letra" length="1" />
+        </property>
+        <property name="orden" type="java.lang.Byte">
+            <column name="orden" />
+        </property>
+        <property name="bloque" type="string">
+            <column name="bloque" length="2" />
+        </property>
+        <set name="matriculas" table="matricula" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idcurso" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Matricula" />
+        </set>
+    </class>
+</hibernate-mapping>

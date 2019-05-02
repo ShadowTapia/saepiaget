@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <b:form id="frmRegiones">
+            <b:growl id="msgGeneral" showDetail="true" placementFrom="top" escape="true"/>
+            <b:panel title="Regiones" collapsible="false" look="primary">
+                <b:row>
+                    <b:column>
+                        <p:commandButton id="btnNewRegion" value="Nueva Región" class="btn btn-success" icon="ui-icon-plusthick"/>
+                    </b:column>
+                </b:row>
+                <p:dataTable id="tableRegiones" var="item" value="#{mbVRegiones.todasRegiones}" rowIndexVar="row" style="width: 500px;margin-left: auto;margin-right: auto;margin-top: 20px; margin-bottom: 20px;" class="table table-bordered table-striped table-hover">
+                    <f:facet name="header">
+                        Listado de Regiones
+                    </f:facet>
+                    <p:column headerText="N°" width="50">
+                        <p:outputLabel value="#{row+1}"/>
+                    </p:column>
+                    <p:column headerText="Región">
+                        <p:outputLabel value="#{item.region}"/>
+                    </p:column>
+                </p:dataTable> 
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

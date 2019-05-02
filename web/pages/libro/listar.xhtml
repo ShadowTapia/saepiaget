@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="content">
+        <b:form id="frmlistarAlumnos" prependId="false">
+            <p:breadCrumb style="margin-bottom: 20px;">
+                <p:menuitem value="Home" outcome="/pages/home"/>                
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placementFrom="top" escape="true"/>
+            <b:panel title="Listado de Alumnos" collapsible="false" look="primary" style="margin-left: auto;margin-right: auto;">
+                <b:row>
+                    <b:column style="margin-left: 400px;;margin-right: auto;">
+                        <p:outputLabel value="Año Escolar" for="cboAno"/>                    
+                        <p:selectOneMenu id="cboAno" value="#{mbVAlumnos.mbVCursos.codAno}" style="margin-left: 20px; font-size: 12px;">
+                            <f:selectItem itemLabel="Seleccione Año"/>
+                            <f:selectItems value="#{mbVAnos.lstAnos}"/>
+                            <p:ajax event="valueChange" immediate="true" process="@this" update="cboCurso"/>
+                        </p:selectOneMenu>
+                    </b:column>
+                    <b:column style="margin-left: 450px; margin-right: auto;">
+                        <p:outputLabel value="Curso" for="cboCurso"/>                    
+                        <p:selectOneMenu id="cboCurso" value="#{mbVAlumnos.mbVCursos.codCurso}" style="margin-left: 20px; font-size: 12px;">
+                            <f:selectItem itemLabel="Seleccione Curso"/>
+                            <f:selectItems value="#{mbVAlumnos.mbVCursos.lstCursos}"/>
+                            <f:ajax render="panelLisAlumnos tableAlumnos" listener="#{mbVAlumnos.chargeListalus()}"  event="change"/>
+                        </p:selectOneMenu> 
+                    </b:column>                    
+                </b:row>                
+                <h:panelGrid id="panelLisAlumnos" columns="1" style="margin-left: auto;margin-right: auto;">
+                    <p:commandButton id="btnOrdenar" class="btn btn-success btn-sm" rendered="#{not empty mbVAlumnos.listaAlumnos}" action="#{mbVAlumnos.buscaPupilEdit(mbVAlumnos.mbVCursos.codAno, mbVAlumnos.mbVCursos.codCurso)}" style="margin-left: 1000px; margin-right: 20px; margin-bottom: 20px;" value="Ordenar lista"/>
+                    <p:dataTable id="tableAlumnos" rowIndexVar="rowIndex"  var="item" value="#{mbVAlumnos.listaAlumnos}" rendered="#{not empty mbVAlumnos.listaAlumnos}" emptyMessage="No hay alumnos para este Curso.-">
+                        <f:facet name="header">
+                            #{mbVAlumnos.cursoSelected} Profesor Jefe #{mbVAlumnos.nomProfesor}
+                        </f:facet>
+                        <p:column headerText="N°" style="width: 30px;font-size: 12px;">
+                            <h:outputText value="#{rowIndex + 1}"/>
+                        </p:column>
+                        <p:column headerText="N° lista" style="width: 50px; font-size: 12px;">
+                            <h:outputText value="#{item.matricula.idlista}"/>
+                        </p:column>
+                        <p:column headerText="Run" style="width: 100px;font-size: 12px;">
+                            <h:outputText value="#{item.runalumno}-#{item.digitoal}"/>
+                        </p:column>
+                        <p:column headerText="Nombre" style="width: 230px;font-size: 12px">
+                            <h:outputText value="#{item.nomalumno}"/>
+                        </p:column>
+                        <p:column headerText="A. Paterno" style="width: 120px;font-size: 12px">
+                            <h:outputText value="#{item.paternoalu}"/>
+                        </p:column>
+                        <p:column headerText="A. Materno" style="width: 120px;font-size: 12px">
+                            <h:outputText value="#{item.maternoalu}"/>
+                        </p:column>
+                        <p:column headerText="Dirección" style="font-size: 12px">
+                            <h:outputText value="#{item.direccion}"/>
+                        </p:column>
+                        <p:column headerText="Télefono" style="width: 120px;font-size: 12px">
+                            <h:outputText value="#{item.fono}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            Hay #{mbVAlumnos.listaAlumnos.size()} alumnos en este curso. (H:#{mbVAlumnos.numMasculino} M:#{mbVAlumnos.numFemenino}).
+                        </f:facet>
+                    </p:dataTable>
+                </h:panelGrid>
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

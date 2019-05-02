@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form id="frmPerfil"> 
+            <p:breadCrumb>
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="Configuración/Perfiles" outcome="/pages/perfiles/perfiles"/>
+            </p:breadCrumb>
+            <p:growl id="msgGeneral" autoUpdate="true" showDetail="true" escape="true"/>
+            <p:fieldset legend="Mantenedor de Perfiles" style="margin-top: 20px; margin-left: auto; margin-right: auto; width: 600px;">
+                <h:panelGrid id="pgPerfil" columns="2">
+                    <b:inputText id="txtPerfil"  label="Nombre Perfil" class="form-control" value="#{mbVProfiles.profiles.tipo}"/>
+                    <b:message for="txtPerfil"/>
+                </h:panelGrid>
+                <b:commandButton id="btnGuardar" iconAwesome="fa-hdd-o" class="btn btn-success" style="margin-bottom: 5px;" actionListener="#{mbVProfiles.register()}" update=":frmPerfil:pgPerfil"  value="Guardar"/>
+                
+                <h:panelGrid id="pgListaProfile" columns="1" style="margin-top: 20px">
+                    <p:dataTable id="tableProfile" var="item" value="#{mbVProfiles.allProfiles}" rowIndexVar="rowIndex" emptyMessage="No se encontraron perfiles que mostrar.-" class="table table-striped table-hover table-bordered" style="margin-bottom: 20px">
+                        <f:facet name="header">
+                            Listado de Perfiles
+                        </f:facet>
+                        <p:column headerText="N°" width="80">
+                            <p:outputLabel style="font-size: 12px" value="#{rowIndex + 1}"/>
+                        </p:column>
+                        <p:column headerText="Tipo" width="300">
+                            <p:outputLabel style="font-size: 12px" value="#{item.tipo}"/>
+                        </p:column>
+                        <p:column style="width: 132px; font-size: 12px;">
+                            <p:commandButton id="bntBorrar2"  value="Borrar" icon="fa fa-remove" class="btn btn-danger btn-xs" actionListener="#{mbVProfiles.delProfiles(item)}" update=":frmPerfil:tableProfile">
+                                <p:confirm header="Confirmación" message="¿Desea borrar este registro?" icon="ui-icon-alert"/>
+                            </p:commandButton>                            
+                        </p:column>
+                    </p:dataTable>                    
+                </h:panelGrid>
+            </p:fieldset>
+            <p:confirmDialog global="true" id="confirmDialog" widgetVar="confirmDelete" closeOnEscape="true">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+            </p:confirmDialog>
+        </h:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 26, 2018 5:23:29 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Tensenanza" table="tensenanza" catalog="saepiaget" optimistic-lock="version">
+        <id name="idense" type="string">
+            <column name="idense" length="15" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="planes" class="com.piaget.pojo.Planes" fetch="select">
+            <column name="coddecreto" not-null="true" />
+        </many-to-one>
+        <property name="idnum" type="short">
+            <column name="idnum" not-null="true" />
+        </property>
+        <property name="namense" type="string">
+            <column name="namense" length="50" not-null="true" />
+        </property>
+        <property name="dateresol" type="date">
+            <column name="dateresol" length="10" not-null="true" />
+        </property>
+        <set name="cursoses" table="cursos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idense" length="15" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Cursos" />
+        </set>
+    </class>
+</hibernate-mapping>

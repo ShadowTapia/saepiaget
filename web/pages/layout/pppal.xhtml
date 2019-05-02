@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"      
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="Site.css"/>
+        <title>Sistema Administración Pedagógica</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">            
+            <ui:insert name="top">              
+                <b:navBar brand="Sistema Administración Pedagógica" brand-href="#" inverse="true">
+                    <b:form id="frmLogin" class="navbar-form navbar-right" role="login">                       
+                        <div class="form-group">
+                            <b:inputText id="txtMail" type="email" class="form-control input-sm" mask="email" placeholder="Email" value="#{sesBean.strMail}">
+                                <f:facet name="prepend">
+                                    <b:iconAwesome name="at"/>
+                                </f:facet>
+                            </b:inputText>
+                        </div>
+                        <div class="form-group">
+                            <b:inputSecret id="txtPass" type="password" class="form-control input-sm" placeholder="Contraseña" value="#{sesBean.userPass}">
+                                <f:facet name="prepend">
+                                    <b:iconAwesome name="key"/>
+                                </f:facet>
+                            </b:inputSecret>
+                        </div>
+                        <div class="form-group">
+                            <b:commandButton id="btnSign" look="success" value="Ingresar" size="sm" iconAwesome="fa-chevron-right" icon-align="right" action="#{sesBean.autenticar()}" update="@form" class="form-control"/>
+                        </div>                        
+                    </b:form>
+                </b:navBar>
+            </ui:insert>
+        </div>
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom">
+                <ui:insert name="bottom">
+                    <hr/>
+                    <div align="center">&copy; - Sistema Administración Pedagógica</div>
+                </ui:insert>
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

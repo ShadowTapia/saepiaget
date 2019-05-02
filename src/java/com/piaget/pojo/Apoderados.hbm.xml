@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 26, 2018 5:23:29 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Apoderados" table="apoderados" catalog="saepiaget" optimistic-lock="version">
+        <id name="idapoderado" type="string">
+            <column name="idapoderado" length="15" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="anos" class="com.piaget.pojo.Anos" fetch="select">
+            <column name="id_ano" not-null="true" />
+        </many-to-one>
+        <property name="rutapoderado" type="int">
+            <column name="rutapoderado" not-null="true" />
+        </property>
+        <property name="digitoap" type="java.lang.Character">
+            <column name="digitoap" length="1" />
+        </property>
+        <property name="nomapo" type="string">
+            <column name="nomapo" length="30" />
+        </property>
+        <property name="paternoap" type="string">
+            <column name="paternoap" length="20" />
+        </property>
+        <property name="maternoap" type="string">
+            <column name="maternoap" length="20" />
+        </property>
+        <property name="celular" type="java.lang.Integer">
+            <column name="celular" />
+        </property>
+        <property name="fono" type="java.lang.Integer">
+            <column name="fono" />
+        </property>
+        <property name="relacion" type="string">
+            <column name="relacion" length="20" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="30" />
+        </property>
+        <property name="direccionap" type="string">
+            <column name="direccionap" length="130" />
+        </property>
+        <set name="alumnoses" table="alumnos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="rutapoderado" length="15" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Alumnos" />
+        </set>
+    </class>
+</hibernate-mapping>

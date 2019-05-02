@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 18, 2018 2:42:48 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Sedes" table="sedes" catalog="saepiaget" optimistic-lock="version">
+        <id name="idsede" type="java.lang.Short">
+            <column name="idsede" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="comunas" class="com.piaget.pojo.Comunas" fetch="select">
+            <column name="codcomuna" />
+        </many-to-one>
+        <property name="namesede" type="string">
+            <column name="namesede" length="50" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="150" />
+        </property>
+        <set name="cursoses" table="cursos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idsede" />
+            </key>
+            <one-to-many class="com.piaget.pojo.Cursos" />
+        </set>
+    </class>
+</hibernate-mapping>

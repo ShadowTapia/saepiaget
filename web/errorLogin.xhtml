@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+    <h:head>
+        <title>Sistema Pedagógico</title>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="Site.css"/>
+    </h:head>
+    <h:body>
+        <b:jumbotron>
+            <h1>Error de acceso!</h1>
+            <h3>Usuario y/o contraseña incorrecto, favor de verificar</h3>
+            <b:form id="frmLogin">
+                <div class="form-group col-xs-2">
+                    <b:inputText id="txtMail" label="Usuario" type="email" class="form-control" value="#{sesBean.strMail}">
+                    </b:inputText>
+                </div>
+                <div class="form-group col-xs-2">
+                    <b:inputSecret id="txtPass" label="Contraseña" type="password" class="form-control" value="#{sesBean.userPass}">
+                    </b:inputSecret>
+                </div>
+                <br/>
+                <div class="form-group col-xs-1">
+                    <b:commandButton id="btnSign" look="success" value="Ingresar" size="sm" action="#{sesBean.autenticar()}" update="@form" class="form-control"/>
+                </div>
+            </b:form>            
+        </b:jumbotron>
+    </h:body>
+</html>
+

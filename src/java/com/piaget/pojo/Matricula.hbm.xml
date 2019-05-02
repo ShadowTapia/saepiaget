@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 26, 2018 5:23:29 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Matricula" table="matricula" catalog="saepiaget" optimistic-lock="version">
+        <id name="idalumno" type="string">
+            <column name="idalumno" length="15" />
+            <generator class="foreign">
+                <param name="property">alumnos</param>
+            </generator>
+        </id>
+        <one-to-one name="alumnos" class="com.piaget.pojo.Alumnos" constrained="true"></one-to-one>
+        <many-to-one name="anos" class="com.piaget.pojo.Anos" fetch="select">
+            <column name="id_ano" not-null="true" />
+        </many-to-one>
+        <many-to-one name="cursos" class="com.piaget.pojo.Cursos" fetch="select" not-found="ignore">
+            <column name="idcurso" />
+        </many-to-one>
+        <property name="fmatricula" type="date">
+            <column name="fmatricula" length="10" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="observaciones" length="250" />
+        </property>
+        <property name="cursosrepetidos" type="string">
+            <column name="cursosrepetidos" length="3" />
+        </property>
+        <property name="nummatricula" type="java.lang.Short">
+            <column name="nummatricula" />
+        </property>
+        <property name="causasretiro" type="string">
+            <column name="causasretiro" length="50" />
+        </property>
+        <property name="ret" type="string">
+            <column name="ret" length="2" />
+        </property>
+        <property name="fecharetiroalumno" type="date">
+            <column name="fecharetiroalumno" length="10" />
+        </property>
+        <property name="idlista" type="java.lang.Short">
+            <column name="idlista" />
+        </property>
+    </class>
+</hibernate-mapping>

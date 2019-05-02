@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <b:form id="frmAnosEdit">
+            <p:breadCrumb style="margin-bottom: 20px;">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="Configuración / Años" outcome="/pages/anos/anos"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placement-from="top" escape="true"/>
+            <b:panel title="Actualizar Año" look="primary" collapsible="false" style="width: 1100px; margin-left: auto; margin-right: auto;">
+                <b:row>
+                    <b:column col-xs="1" style="height: 40px">
+                        <b:inputText id="txtAno" style="width: 60px;" label="Año" class="form-control input-sm" value="#{editRecordObj.ano}" disabled="true"/>
+                    </b:column>
+                    <b:column col-xs="2" style="height: 35px;">
+                        <b:dateTimePicker id="txtFinicio" style="width: 170px;" format="DD/MM/YYYY" show-time="false" value="#{editRecordObj.finicio}" showButtonPanel="true" label="F. Inicio" class="form-control input-sm"/>
+                        <b:message for="txtFinicio"/>
+                    </b:column>
+                    <b:column col-xs="2" style="height: 35px;">
+                        <b:dateTimePicker id="txtFtermino" style="width: 170px;" format="DD/MM/YYYY" show-time="false" value="#{editRecordObj.ftermino}" showButtonPanel="true" label="F. Termino" class="form-control input-sm"/>
+                        <b:message for="txtFtermino"/>
+                    </b:column>
+                    <b:column col-xs="2" style="height: 35px;">
+                        <b:switch id="swtSituacion" label="Situación" onColor="info" value="#{editRecordObj.situacion}" onText="Abierto" offText="Cerrado" style="width: 180px;"/>                        
+                    </b:column>
+                    <b:column col-xs="2" style="height: 40px;">
+                        <b:inputText id="txtRegimen" style="width: 130px;" label="Regimen" class="form-control input-sm" value="#{editRecordObj.regimen}" disabled="true"/>
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column style="margin-top: 50px;">
+                        <b:commandButton id="btnUpdate" look="success" value="Modificar" action="#{mbVAnos.UpdateAno(editRecordObj)}"/>
+                    </b:column>
+                </b:row>
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

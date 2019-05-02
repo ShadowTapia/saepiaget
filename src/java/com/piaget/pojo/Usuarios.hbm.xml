@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 8, 2018 4:27:46 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.piaget.pojo.Usuarios" table="usuarios" catalog="saepiaget" optimistic-lock="version">
+        <id name="idUser" type="string">
+            <column name="id_user" length="15" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="anos" class="com.piaget.pojo.Anos" fetch="select">
+            <column name="id_ano" />
+        </many-to-one>
+        <many-to-one name="profesores" class="com.piaget.pojo.Profesores" fetch="select">
+            <column name="id_profe" length="15" not-null="true" />
+        </many-to-one>
+        <property name="userpass" type="string">
+            <column name="userpass" length="700" not-null="true" />
+        </property>
+        <property name="bloqueada" type="string">
+            <column name="bloqueada" length="5" />
+        </property>
+    </class>
+</hibernate-mapping>

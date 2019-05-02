@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layout/pMain.xhtml"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <b:form id="frmRegCursos">
+            <p:breadCrumb style="margin-bottom: 20px;">
+                <p:menuitem value="Home" outcome="/pages/home"/>
+                <p:menuitem value="Cursos / Listar" outcome="/pages/cursos/cursos"/>
+                <p:menuitem value="Cursos / Actualizar / Orden" outcome="/pages/cursos/ordenCursos"/>
+            </p:breadCrumb>
+            <b:growl id="msgGeneral" showDetail="true" placementFrom="top" escape="true"/>
+            <b:panel title="Registro de Cursos Año Escolar #{session.getAttribute('ano')}" collapsible="false" look="primary" style="width: 1100px;margin-left: auto;margin-right: auto;">
+                <h:panelGrid columns="6">
+                    <b:column style="width: 210px;">
+                        <p:outputLabel value="Nombre" for="txtNomCurso"/>
+                    </b:column>
+                    <b:column>
+                        <p:inputText id="txtNomCurso" value="#{mbVCursos.cursos.nomcurso}" style="font-size: 12px" required="true">
+                            <f:validateLength minimum="2"/>
+                        </p:inputText>
+                    </b:column>
+                    <b:column>
+                        <p:message for="txtNomCurso"/>
+                    </b:column>
+                    <b:column>
+                        <p:outputLabel value="letra" for="txtLetra"/>
+                    </b:column>
+                    <b:column>
+                        <p:inputText id="txtLetra" value="#{mbVCursos.cursos.letra}" style="width: 40px; font-size: 12px" converter="uCaseConverter">
+                            <f:validateLength maximum="1"/>
+                            <f:ajax event="blur" render="@this"/>
+                        </p:inputText>
+                    </b:column>
+                    <b:column>
+                        <p:message for="txtLetra"/>
+                    </b:column>
+                </h:panelGrid>
+                <h:panelGrid columns="4" style="margin-top: 20px;">                   
+                    <b:column style="width: 210px">
+                        <p:outputLabel value="Plan de Estudio" for="cboPlan"/>
+                    </b:column>
+                    <b:column>
+                        <p:selectOneMenu id="cboPlan" style="margin-left: 0px; font-size: 12px;" label="Plan de estudio" value="#{mbVCursos.mbVPlanes.codtextDecreto}" required="true" requiredMessage="Debe seleccionar un plan de Estudio.-">
+                            <f:selectItem itemLabel="Seleccione Plan de estudio"/>
+                            <f:selectItems value="#{mbVCursos.mbVPlanes.listPlanResol}"/>
+                            <p:ajax event="valueChange" immediate="true" process="@this" update="cboEnse"/>
+                        </p:selectOneMenu>                        
+                    </b:column>
+                    <b:column style="width: 210px">
+                        <p:outputLabel value="T. de Enseñanza" for="cboEnse"/>
+                    </b:column>
+                    <b:column style="margin-left: 20px;">
+                        <p:selectOneMenu id="cboEnse" value="#{mbVCursos.codeEnse}" style="width: 300px; font-size: 12px;" required="true" requiredMessage="Debe seleccionar un tipo de Enseñanza.-">
+                            <f:selectItem itemLabel="Seleccione un tipo de Enseñanza"/>
+                            <f:selectItems value="#{mbVCursos.mbVPlanes.listEnsenanza}"/>
+                        </p:selectOneMenu>                        
+                    </b:column>
+                </h:panelGrid>
+                <h:panelGrid columns="4" style="margin-top: 20px">
+                    <b:column style="width: 210px">
+                        <p:outputLabel value="Profesor" for="cboProfes"/>
+                    </b:column>
+                    <b:column>
+                        <p:selectOneMenu id="cboProfes" value="#{mbVCursos.codProfe}" style="font-size: 12px;">
+                            <f:selectItem itemLabel="Seleccione un Profesor"/>
+                            <f:selectItems value="#{mbVProfes.lstOnlyprofes}"/>
+                        </p:selectOneMenu> 
+                    </b:column>
+                    <b:column>
+                        <p:outputLabel value="Sede" for="cboSede"/>
+                    </b:column>
+                    <b:column style="margin-left: 60px;">
+                        <p:selectOneMenu id="cboSede" value="#{mbVCursos.codSede}" style="font-size: 12px;">
+                            <f:selectItem itemLabel="Seleccione una Sede"/>
+                            <f:selectItems value="#{mbVSedes.lstSedes}"/>
+                        </p:selectOneMenu>
+                    </b:column>
+                </h:panelGrid>
+                <b:commandButton id="btnGuardar" look="success" class="btn btn-success" style="margin-top: 20px; margin-left: 500px; margin-right: 500px;" value="Guardar" size="sm" action="#{mbVCursos.registerCursos()}"/>
+            </b:panel>
+        </b:form>
+        <p:ajaxStatus id="startAjax" style="float: top" onstart="PF('start').show();" oncomplete="PF('start').hide();"/>
+        <p:dialog widgetVar="start" resizable="false">
+            <p:graphicImage value="#{resource['images:loader.gif']}"/>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./layout/pMain.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <p:breadCrumb style="margin-bottom: 20px">
+            <p:menuitem value="Home" outcome="/pages/home"/>
+            <p:menuitem value="Contacto" outcome="/pages/Contacto"/>
+        </p:breadCrumb>
+        <h2>Contacto</h2>
+        <h3>Página contacto</h3>
+        <address>
+            Calle Esmeralda<br/>
+            1353 Edificio 3, Depto. 41, Quilpué<br />
+            <abbr title="Phone">Fono:</abbr>(9)84096104
+        </address>
+        <strong>Soporte:</strong><a href="mailto:chelo.tapia@gmail.com">Marcelo Tapia D. - Administrador</a>
+    </ui:define>
+
+</ui:composition>
